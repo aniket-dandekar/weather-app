@@ -17,7 +17,7 @@ function App() {
     } else {
       console.log("Geolocation is not supported by this browser.")
     }
-    eslint-disable-next-line
+    // eslint-disable-next-line
   }, [])
 
   // let x = document.getElementById("demo");
