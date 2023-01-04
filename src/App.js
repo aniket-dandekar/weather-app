@@ -20,19 +20,19 @@ function App() {
     eslint-disable-next-line
   }, [])
 
-  let x = document.getElementById("demo");
-  function getLocation() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(showPosition);
-    } else {
-      x.innerHTML = "Geolocation is not supported by this browser.";
-    }
-  }
+  // let x = document.getElementById("demo");
+  // function getLocation() {
+  //   if (navigator.geolocation) {
+  //     navigator.geolocation.getCurrentPosition(showPosition);
+  //   } else {
+  //     x.innerHTML = "Geolocation is not supported by this browser.";
+  //   }
+  // }
 
-  function showPosition(position) {
-    x.innerHTML = "Latitude: " + position.coords.latitude +
-      "<br>Longitude: " + position.coords.longitude;
-  }
+  // function showPosition(position) {
+  //   x.innerHTML = "Latitude: " + position.coords.latitude +
+  //     "<br>Longitude: " + position.coords.longitude;
+  // }
 
   const [data, setData] = useState();
   const [currentData, setCurrentData] = useState();
@@ -124,8 +124,8 @@ function App() {
   return (
     <>
       <Navbar city={city} mode={darkMode} toggleMode={toggleMode} />
-      <button className="p-1 bg-indigo-400 text-white font-bold" onClick={()=>{getLocation()}}>Mode</button>
-      <p id="demo"></p>
+      {/* <button className="p-1 bg-indigo-400 text-white font-bold" onClick={()=>{getLocation()}}>Mode</button> */}
+      {/* <p id="demo"></p> */}
 
       {
         data &&
