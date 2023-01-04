@@ -11,13 +11,13 @@ function App() {
   // let timezone = 'auto';
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(getWeatherReport)
-    // if (navigator.geolocation) {
-    //   navigator.geolocation.getCurrentPosition(getWeatherReport);
-    // } else {
-    //   console.log("Geolocation is not supported by this browser.")
-    // }
-    // eslint-disable-next-line
+    // navigator.geolocation.getCurrentPosition(getWeatherReport)
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(getWeatherReport);
+    } else {
+      console.log("Geolocation is not supported by this browser.")
+    }
+    eslint-disable-next-line
   }, [])
 
   let x = document.getElementById("demo");
