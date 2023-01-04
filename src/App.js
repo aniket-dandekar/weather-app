@@ -20,20 +20,6 @@ function App() {
     // eslint-disable-next-line
   }, [])
 
-  // let x = document.getElementById("demo");
-  // function getLocation() {
-  //   if (navigator.geolocation) {
-  //     navigator.geolocation.getCurrentPosition(showPosition);
-  //   } else {
-  //     x.innerHTML = "Geolocation is not supported by this browser.";
-  //   }
-  // }
-
-  // function showPosition(position) {
-  //   x.innerHTML = "Latitude: " + position.coords.latitude +
-  //     "<br>Longitude: " + position.coords.longitude;
-  // }
-
   const [data, setData] = useState();
   const [currentData, setCurrentData] = useState();
   const [dailyData, setDailyData] = useState();
@@ -70,11 +56,6 @@ function App() {
   }
 
   const getWeatherReport = async (position) => {
-    // console.log(position)
-    // if (position !== undefined) {
-    //   alert("no position")
-    // }
-    // let url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m,apparent_temperature,weathercode,visibility,windspeed_10m&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min&current_weather=true&timeformat=unixtime&timezone=${timezone}`;
 
     let url = `https://api.open-meteo.com/v1/forecast?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,precipitation,rain,weathercode,visibility,windspeed_10m&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset&current_weather=true&timeformat=unixtime&timezone=auto`;
     let Data = await fetch(url);
@@ -124,8 +105,6 @@ function App() {
   return (
     <>
       <Navbar city={city} mode={darkMode} toggleMode={toggleMode} />
-      {/* <button className="p-1 bg-indigo-400 text-white font-bold" onClick={()=>{getLocation()}}>Mode</button> */}
-      {/* <p id="demo"></p> */}
 
       {
         data &&
