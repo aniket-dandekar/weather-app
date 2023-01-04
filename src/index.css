@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .daily-card {
+        @apply mx-1 p-2 px-4 border hover:scale-105
+    }
+
+    .daily-card-mob {
+        @apply my-1 pt-1 px-1 text-gray-700 rounded-lg shadow-lg border-gray-100 border text-sm
+    }
+
+    .weather-icons {
+        @apply text-8xl;
+    }
+
+    .color-transit {
+        @apply transition-colors ease-in-out duration-200;
+    }
+
+    .darkmode-class{
+        @apply dark:text-white dark:bg-gray-800;
+    }
+}
