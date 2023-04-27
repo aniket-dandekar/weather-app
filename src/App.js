@@ -11,9 +11,8 @@ function App() {
   // let timezone = 'auto';
 
   useEffect(() => {
-    // navigator.geolocation.getCurrentPosition(getWeatherReport)
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(getWeatherReport);
+      navigator.geolocation.getCurrentPosition(getWeatherReport, cannotGetWeatherReport);
     } else {
       console.log("Geolocation is not supported by this browser.")
     }
@@ -102,39 +101,44 @@ function App() {
     }
   }
 
+  const cannotGetWeatherReport = () => {
+    console.log("Failed to get coordinates")
+  }
+
   return (
     <>
       <Navbar city={city} mode={darkMode} toggleMode={toggleMode} />
 
       {
-        data &&
-        <main className="p-2 sm:p-6 flex flex-col justify-center darkmode-class color-transit">
-          <div className="wrapper max-w-5xl mx-auto">
-            <CurrentWeather weather={currentData} city={undefined} />
-            <div className="flex flex-wrap justify-center my-6 gap-1">
-              {dailyData.map((element) => {
-                return <DailyWeather key={element.day}
-                  daily={element}
-                />
-              })}
-            </div>
-            <div className="rounded-md border border-gray-400">
-              <div className="flex items-center justify-around border-gray-400 border-b last:border-b-0 py-2">
-                <div className="text-center text-sm sm:text-xl basis-5"></div>
-                <div className="text-center text-sm sm:text-xl basis-1/5">Time</div>
-                <div className="text-center text-sm sm:text-xl basis-1/5">Temperature</div>
-                <div className="text-center text-sm sm:text-xl basis-1/5">Feels like</div>
-                <div className="text-center text-sm sm:text-xl basis-1/5">Wind</div>
+        data ?
+          <main className="p-2 sm:p-6 flex flex-col justify-center darkmode-class color-transit">
+            <div className="wrapper max-w-5xl mx-auto">
+              <CurrentWeather weather={currentData} city={undefined} />
+              <div className="flex flex-wrap justify-center my-6 gap-1">
+                {dailyData.map((element) => {
+                  return <DailyWeather key={element.day}
+                    daily={element}
+                  />
+                })}
               </div>
+              <div className="rounded-md border border-gray-400">
+                <div className="flex items-center justify-around border-gray-400 border-b last:border-b-0 py-2">
+                  <div className="text-center text-sm sm:text-xl basis-5"></div>
+                  <div className="text-center text-sm sm:text-xl basis-1/5">Time</div>
+                  <div className="text-center text-sm sm:text-xl basis-1/5">Temperature</div>
+                  <div className="text-center text-sm sm:text-xl basis-1/5">Feels like</div>
+                  <div className="text-center text-sm sm:text-xl basis-1/5">Wind</div>
+                </div>
 
-              {hourlyData.map((element) => {
-                return <HourlyWeather key={element.time}
-                  hourly={element}
-                />
-              })}
+                {hourlyData.map((element) => {
+                  return <HourlyWeather key={element.time}
+                    hourly={element}
+                  />
+                })}
+              </div>
             </div>
-          </div>
-        </main>
+          </main> : <main><h1 className="text-center text-2xl mt-8 font-semibold">Failed to get Co-ordinates!</h1>
+          <h1 className="text-center text-2xl my-2 font-semibold">Please reload the page with loaction access.</h1></main>
       }
     </>
   );
