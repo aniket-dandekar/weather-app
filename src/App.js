@@ -10,16 +10,8 @@ function App() {
   // let longitude = '73.1034';
   // let timezone = 'auto';
 
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(getWeatherReport, cannotGetWeatherReport);
-    } else {
-      console.log("Geolocation is not supported by this browser.")
-    }
-    // eslint-disable-next-line
-  }, [])
-
   const [data, setData] = useState();
+  const [loading, setLoading] = useState(false);
   const [currentData, setCurrentData] = useState();
   const [dailyData, setDailyData] = useState();
   const [hourlyData, setHourlyData] = useState();
@@ -55,10 +47,14 @@ function App() {
   }
 
   const getWeatherReport = async (position) => {
+    setLoading(true)
 
     let url = `https://api.open-meteo.com/v1/forecast?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,precipitation,rain,weathercode,visibility,windspeed_10m&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset&current_weather=true&timeformat=unixtime&timezone=auto`;
     let Data = await fetch(url);
     let parsedData = await Data.json();
+    if (parsedData) {
+      setLoading(false)
+    }
     setData(parsedData);
     getCurrentData(parsedData)
     // console.log(parsedData.hourly.weathercode)
@@ -102,8 +98,19 @@ function App() {
   }
 
   const cannotGetWeatherReport = () => {
-    console.log("Failed to get coordinates")
+    setLoading(false)
+    // console.log("Failed to get coordinates")
   }
+
+  useEffect(() => {
+    setLoading(true)
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(getWeatherReport, cannotGetWeatherReport);
+    } else {
+      console.log("Geolocation is not supported by this browser.")
+    }
+    // eslint-disable-next-line
+  }, [])
 
   return (
     <>
@@ -137,8 +144,9 @@ function App() {
                 })}
               </div>
             </div>
-          </main> : <main><h1 className="text-center text-2xl mt-8 font-semibold">Failed to get Co-ordinates!</h1>
-          <h1 className="text-center text-2xl my-2 font-semibold">Please reload the page with loaction access.</h1></main>
+          </main> : (loading ? <main className="darkmode-class"><h1 className="text-center text-2xl mt-8 font-semibold">Getting weather data...</h1>
+          </main> : <main className="darkmode-class"><h1 className="text-center text-2xl mt-8 font-semibold">Failed to get Co-ordinates!</h1>
+            <h1 className="text-center text-2xl my-2 font-semibold">Please reload the page with loaction access.</h1></main>)
       }
     </>
   );
