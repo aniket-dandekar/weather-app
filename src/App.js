@@ -18,14 +18,18 @@ function App() {
   const [city, setCity] = useState();
   const [darkMode, setDarkMode] = useState(false);
 
-  const toggleMode = () => {
-    const bodyClass = window.document.body.classList;
-    if (!darkMode) {
+  const toggleMode = (input) => {
+    const bodyClasses = window.document.body.classList;
+
+    if (input === false) {
+      localStorage.setItem('darkMode', true)
       setDarkMode(true);
-      bodyClass.add('dark');
-    } else {
+      bodyClasses.add('dark', 'text-white', 'bg-gray-800');
+    }
+    if (input === true) {
+      localStorage.setItem('darkMode', false)
       setDarkMode(false);
-      bodyClass.remove('dark');
+      bodyClasses.remove('dark', 'text-white', 'bg-gray-800');
     }
   }
 
@@ -41,6 +45,7 @@ function App() {
       visibility: Data.hourly.visibility[0] / 1000,
     })
   }
+
   const getDailyData = (dailyData, hourlyData) => {
     setDailyData(dailyData)
     setHourlyData(hourlyData)
@@ -103,8 +108,17 @@ function App() {
   }
 
   useEffect(() => {
-    setLoading(true)
+    document.body.classList.add("min-h-screen")
+    if (localStorage.getItem('darkMode')) {
+      toggleMode(JSON.parse(localStorage.getItem('darkMode')))
+    }
+    else {
+      localStorage.setItem('darkMode', false);
+      toggleMode(false)
+    }
+
     if (navigator.geolocation) {
+      setLoading(true)
       navigator.geolocation.getCurrentPosition(getWeatherReport, cannotGetWeatherReport);
     } else {
       console.log("Geolocation is not supported by this browser.")
@@ -151,5 +165,6 @@ function App() {
     </>
   );
 }
+
 
 export default App;
