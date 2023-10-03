@@ -9,6 +9,7 @@ function App() {
   // let latitude = '19.216';
   // let longitude = '73.1034';
   // let timezone = 'auto';
+  
 
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
