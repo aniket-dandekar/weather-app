@@ -11,7 +11,7 @@ const Navbar = ({ city, mode, toggleMode }) => {
         <div className="theme-change">
           <div className="font-semibold flex justify-between items-center gap-1">
             <p>Mode </p>
-            <button onClick={() => { toggleMode(mode) }}>
+            <button onClick={() => { toggleMode(!mode) }}>
               <IconManager mode={mode} />
             </button>
           </div>

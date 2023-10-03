@@ -16,20 +16,19 @@ function App() {
   const [dailyData, setDailyData] = useState();
   const [hourlyData, setHourlyData] = useState();
   const [city, setCity] = useState();
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(null);
 
   const toggleMode = (input) => {
     const bodyClasses = window.document.body.classList;
 
-    if (input === false) {
-      localStorage.setItem('darkMode', true)
-      setDarkMode(true);
-      bodyClasses.add('dark', 'text-white', 'bg-gray-800');
-    }
     if (input === true) {
-      localStorage.setItem('darkMode', false)
-      setDarkMode(false);
+      bodyClasses.add('dark', 'text-white', 'bg-gray-800');
+      setDarkMode(true);
+      localStorage.setItem('darkMode', true)
+    } else if (input === false) {
       bodyClasses.remove('dark', 'text-white', 'bg-gray-800');
+      setDarkMode(false);
+      localStorage.setItem('darkMode', false)
     }
   }
 
@@ -107,15 +106,29 @@ function App() {
     // console.log("Failed to get coordinates")
   }
 
-  useEffect(() => {
-    document.body.classList.add("min-h-screen")
-    if (localStorage.getItem('darkMode')) {
-      toggleMode(JSON.parse(localStorage.getItem('darkMode')))
-    }
-    else {
+  async function checkAndSetDarkmode() {
+    let localDarkMode = localStorage.getItem('darkMode')
+    if (localDarkMode === null) {
       localStorage.setItem('darkMode', false);
       toggleMode(false)
     }
+    else {
+      let parsedDarkMode = await JSON.parse(localDarkMode)
+      if (parsedDarkMode === true) {
+        toggleMode(true)
+      } else if (parsedDarkMode === false) {
+        console.log("Light mode set to", parsedDarkMode)
+        toggleMode(false)
+      } else {
+        localStorage.setItem('darkMode', false);
+        toggleMode(false)
+      }
+    }
+  }
+
+  useEffect(() => {
+    document.body.classList.add("min-h-screen")
+    checkAndSetDarkmode()
 
     if (navigator.geolocation) {
       setLoading(true)
