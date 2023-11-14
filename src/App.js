@@ -174,7 +174,7 @@ function App() {
             </div>
           </main> : (loading ? <main className="darkmode-class"><h1 className="text-center text-2xl mt-8 font-semibold">Getting weather data...</h1>
           </main> : <main className="darkmode-class"><h1 className="text-center text-2xl mt-8 font-semibold">Failed to get Co-ordinates!</h1>
-            <h1 className="text-center text-2xl my-2 font-semibold">Please reload the page with loaction access.</h1><p className="text-center mx-auto"><a className="text-center mx-auto" href="/">Click here to reload</a></p></main>)
+            <h1 className="text-center text-2xl my-2 font-semibold">Please reload the page with loaction access.</h1><p className="text-center mx-auto underline"><a className="text-center mx-auto" href="/">Click here to reload</a></p></main>)
       }
     </>
   );
